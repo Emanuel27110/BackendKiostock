@@ -26,7 +26,6 @@ export const register = async (req, res) => {
     });
     
     const token = await creaToken({ id: userSaved._id });
-    res.cookie('token', token);
     
     res.json({
       id: userSaved._id,
@@ -34,7 +33,8 @@ export const register = async (req, res) => {
       email: userSaved.email,
       rol: userSaved.rol,
       createAt: userSaved.createdAt,
-      updateAt: userSaved.updatedAt
+      updateAt: userSaved.updatedAt,
+      token: token
     });
   } catch (error) {
     console.error('Error en registro:', error);
@@ -56,7 +56,6 @@ export const login = async (req, res) => {
     if (!isMatch) return res.status(400).json({ message: "contraseña incorrecta" });
     
     const token = await creaToken({ id: userFound._id });
-    res.cookie('token', token);
     
     res.json({
       id: userFound._id,
@@ -64,7 +63,8 @@ export const login = async (req, res) => {
       email: userFound.email,
       rol: userFound.rol,
       createAt: userFound.createdAt,
-      updateAt: userFound.updatedAt
+      updateAt: userFound.updatedAt,
+      token: token
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -72,9 +72,6 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  res.cookie('token', "", {
-    expires: new Date(0)
-  });
   return res.sendStatus(200);
 };
 
