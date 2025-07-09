@@ -12,28 +12,18 @@ import {
 
 const router = express.Router();
 
-// Ruta para crear un nuevo proveedor
-router.post("/proveedores", createProveedor);
+// Rutas específicas primero
+router.get("/proveedores/dashboard/stats", getDashboardStats);
 
-// Ruta para obtener todos los proveedores
-router.get("/proveedores", getProveedores);
-
-// Ruta para obtener un proveedor por ID
+// Rutas con parámetros después
 router.get("/proveedores/:id", getProveedorById);
-
-// Ruta para actualizar un proveedor
-router.put("/proveedores/:id", updateProveedor);
-
-// Ruta para eliminar un proveedor (borrado lógico)
-router.delete("/proveedores/:id", deleteProveedor);
-
-// Ruta para eliminar permanentemente un proveedor (borrado físico)
-router.delete("/proveedores/:id/permanente", deleteProveedorPermanente);
-
-// Ruta para obtener las compras de un proveedor
 router.get("/proveedores/:id/compras", getComprasPorProveedor);
 
-// Ruta para obtener estadísticas para el dashboard
-router.get("/proveedores/dashboard/stats", getDashboardStats);
+// Resto de rutas
+router.get("/proveedores", getProveedores);
+router.post("/proveedores", createProveedor);
+router.put("/proveedores/:id", updateProveedor);
+router.delete("/proveedores/:id", deleteProveedor);
+router.delete("/proveedores/:id/permanente", deleteProveedorPermanente);
 
 export default router;
